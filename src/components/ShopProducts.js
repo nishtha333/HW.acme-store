@@ -37,6 +37,7 @@ class Products extends Component {
                 updateLineItemInCart(cart.id, (item.quantity + lineItem.quantity), lineItem.id)
             }
         }
+        window.location.reload()
     }
 
     render () {
@@ -69,11 +70,11 @@ const mapStateToProps = ({orders, products}) => {
     }
 }
 
-const mapDispatchToProps = (dispatch, { history }) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        createCart: (item) => dispatch(createCart(item, history)),
-        createLineItemInCart: (cartId, item) => dispatch(createLineItemInCart(cartId, item, history)),
-        updateLineItemInCart: (cartId, quantity, itemId) => dispatch(updateLineItemInCart(cartId, { quantity }, itemId, history)),
+        createCart: (item) => dispatch(createCart(item)),
+        createLineItemInCart: (cartId, item) => dispatch(createLineItemInCart(cartId, item)),
+        updateLineItemInCart: (cartId, quantity, itemId) => dispatch(updateLineItemInCart(cartId, { quantity }, itemId)),
     }
 }
 

@@ -32,12 +32,11 @@ const resetOrders = () => {
 }
 
 //Create Cart when the first item is added
-const createCart = (item, history) => {
+const createCart = (item) => {
     return (dispatch) => {
         return axios.post('/api/orders', item)
             .then(response => response.data)
             .then(order => dispatch(_createOrder(order))) 
-            .then(() => history.push('/cart'))
     }
 }
 
@@ -49,12 +48,11 @@ const placeOrder = (order) => {
     }
 }
 
-const createLineItemInCart = (cartId, item, history) => {
+const createLineItemInCart = (cartId, item) => {
     return (dispatch) => {
         axios.post(`/api/orders/${cartId}/lineItems`, item)
             .then(response => response.data)
             .then(lineItem => dispatch(_createLineItem(cartId, lineItem)))
-            .then(() => history.push('/cart'))
     }
 }
 
@@ -65,12 +63,11 @@ const deleteLineItemFromCart = (cartId, itemId) => {
     }
 }
 
-const updateLineItemInCart = (cartId, item, itemId, history) => {
+const updateLineItemInCart = (cartId, item, itemId) => {
     return (dispatch) => {
         axios.put(`/api/orders/${cartId}/lineItems/${itemId}`, item)
             .then(response => response.data)
             .then(lineItem => dispatch(_updateLineItem(cartId, lineItem)))
-            .then(() => history && history.push('/cart'))
     }
 }
 

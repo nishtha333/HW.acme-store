@@ -22,7 +22,7 @@ class Main extends Component {
                     <Switch>
                         <Route path="/orders" render={() => <Orders />} />  
                         <Route path="/cart" render={() => <Cart />} />
-                        <Route path="/" render={({ history }) => <ShopProducts history={ history }/>} />                 
+                        <Route path="/" render={() => <ShopProducts />} />                 
                     </Switch>
                 </Fragment>
             </Router>

@@ -15,7 +15,7 @@ class Nav extends Component {
                 <h1>Acme Store</h1>
                 <ul>
                     <li>
-                        <Link to="/shop">Shop</Link>
+                        <Link to="/">Shop</Link>
                     </li>
                     <li>
                         <Link to="/cart">Cart ( {`${itemsInCart}`} )</Link>
