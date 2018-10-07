@@ -20,16 +20,20 @@ router.get('/', (req, res, next) => {
     .catch(next);
 });
 
-// Creates the Cart. User checks to see if any "CART" on it's store. If not, then calls post to create one
+// Creates the Cart and adds the first item to it
 router.post('/', (req, res, next) => {
     Orders.create({ status: 'CART'})
-        .then(order => res.status(201).send(order))
+        .then(order => {
+            return LineItems.create({ orderId: order.id, productId: req.body.productId, quantity: req.body.quantity })
+        }).then((lineItem) => {
+            return Orders.findById(lineItem.orderId, { include: [ LineItems ] })
+        }).then( order => res.status(201).send(order))
         .catch(next);
 });
 
 //Updates order: status (CART -> ORDER)
 router.put('/:id', (req, res, next) => {
-    Orders.findById(req.params.id)
+    Orders.findById(req.params.id, { include: [ LineItems ] })
         .then(order => order.update(req.body))
         .then(order => res.send(order))
         .catch(next);

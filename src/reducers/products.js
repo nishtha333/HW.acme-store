@@ -20,4 +20,8 @@ const productsReducer = (state = [], action) => {
     }
 }
 
-export { getProducts, productsReducer }
+const getProduct = (id, products) => {
+    return products.find(product => product.id === id)
+}
+
+export { getProducts, productsReducer, getProduct }

@@ -1,13 +1,14 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getCart, getCompletedOrders, resetOrders } from '../store'
+import { getCartWithItems, getCompletedOrders, resetOrders } from '../store'
 
 class Nav extends Component {
 
     render() {
 
         const { cart, completedOrders, resetOrders } = this.props
+        const itemsInCart = cart.line_items.reduce((result, input) => (result + input.quantity), 0)
 
         return (
             <Fragment>
@@ -17,7 +18,7 @@ class Nav extends Component {
                         <Link to="/shop">Shop</Link>
                     </li>
                     <li>
-                        <Link to="/cart">Cart ( {`${cart.length}`} )</Link>
+                        <Link to="/cart">Cart ( {`${itemsInCart}`} )</Link>
                     </li>
                     <li>
                         <Link to="/orders">Account - Orders ( {`${completedOrders.length}`} )</Link>
@@ -29,10 +30,10 @@ class Nav extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({orders, products}) => {
     return {
-        cart: getCart(state.orders),
-        completedOrders: getCompletedOrders(state.orders)
+        cart: getCartWithItems(orders, products),
+        completedOrders: getCompletedOrders(orders, products)
     }
 }
 

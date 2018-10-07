@@ -3,7 +3,9 @@ import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getProducts, getOrders } from '../store'
 import Nav from './Nav'
-import Products from './Products'
+import ShopProducts from './ShopProducts'
+import Cart from './Cart'
+import Orders from './Orders';
 
 class Main extends Component {
 
@@ -18,7 +20,9 @@ class Main extends Component {
                 <Fragment>
                     <Nav />
                     <Switch>
-                        <Route path="/shop" render={() => <Products />} />
+                        <Route path="/shop" render={({ history }) => <ShopProducts history={ history }/>} />
+                        <Route path="/cart" render={() => <Cart />} />
+                        <Route path="/orders" render={() => <Orders />} />
                     </Switch>
                 </Fragment>
             </Router>
