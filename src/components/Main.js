@@ -20,9 +20,9 @@ class Main extends Component {
                 <Fragment>
                     <Nav />
                     <Switch>
-                        <Route path="/shop" render={({ history }) => <ShopProducts history={ history }/>} />
+                        <Route path="/orders" render={() => <Orders />} />  
                         <Route path="/cart" render={() => <Cart />} />
-                        <Route path="/orders" render={() => <Orders />} />
+                        <Route path="/" render={({ history }) => <ShopProducts history={ history }/>} />                 
                     </Switch>
                 </Fragment>
             </Router>

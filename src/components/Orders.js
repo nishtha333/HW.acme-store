@@ -9,6 +9,7 @@ class Orders extends Component {
 
         return (
             <Fragment>
+                <h1>Orders</h1>
                 <ul>
                 {
                     completedOrders.map(order => <li key={order.id}>

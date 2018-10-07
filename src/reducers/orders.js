@@ -70,7 +70,7 @@ const updateLineItemInCart = (cartId, item, itemId, history) => {
         axios.put(`/api/orders/${cartId}/lineItems/${itemId}`, item)
             .then(response => response.data)
             .then(lineItem => dispatch(_updateLineItem(cartId, lineItem)))
-            .then(() => history.push('/cart'))
+            .then(() => history && history.push('/cart'))
     }
 }
 
