@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
+import { Typography, Paper, Grid, ListItem, List, ListItemText } from '@material-ui/core'
 import { getCompletedOrders } from '../store'
 
 class Orders extends Component {
@@ -9,23 +10,24 @@ class Orders extends Component {
 
         return (
             <Fragment>
-                <h1>Orders</h1>
-                <ul>
+                <Grid container style={{flexGrow:1}} spacing={16} >
                 {
-                    completedOrders.map(order => <li key={order.id}>
-                        {order.id}
-                        <ul>
-                        {
-                            order.line_items.map(item => <li key={item.id}>
-                                {item.product} {item.quantity}
-                            </li>
-                            )
-                        }
-                        </ul>
-                    </li>
+                    completedOrders.map(order => <Grid item xs={12} key={order.id}>
+                        <Paper style={{padding: "40px", margin: "20px"}}>
+                            <Typography variant="subheading">Order # {order.id}</Typography>
+                            {
+                                order.line_items.map(item => <List key={item.id}>
+                                    <ListItem>
+                                        <ListItemText primary={`Item: ${item.product}`} secondary={`Qty: ${item.quantity}`} />
+                                    </ListItem>
+                                </List>
+                                )
+                            }
+                        </Paper>
+                    </Grid>
                     )
                 }
-                </ul>
+                </Grid>
             </Fragment>
         )
     }

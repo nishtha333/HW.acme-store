@@ -1,6 +1,8 @@
 import React, { Fragment, Component } from 'react'
 import { connect } from 'react-redux'
+import { Typography, Card, Grid, CardContent, CardActions } from '@material-ui/core'
 import { createCart, getCartWithItems, createLineItemInCart, updateLineItemInCart } from '../store'
+import ItemQuantity from './ItemQuantity'
 
 class Products extends Component {
 
@@ -8,20 +10,15 @@ class Products extends Component {
         super()
         this.handleAddToCart = this.handleAddToCart.bind(this)
         this.handleChange = this.handleChange.bind(this)
-        this.productQty = {}
     }
 
     handleChange(event, productId) {
         this.productQty[productId] = event.target.value
     }
 
-    handleAddToCart(productId) {
-        
-        if(!this.productQty[productId]) {
-            return
-        }
+    handleAddToCart(productId, quantity) {
 
-        const item = { productId, quantity: Number( this.productQty[productId] ) }
+        const item = { productId, quantity }
         const { cart, createCart, createLineItemInCart, updateLineItemInCart } = this.props
 
         if(!cart.id) {
@@ -34,29 +31,32 @@ class Products extends Component {
                 createLineItemInCart(cart.id, item)
             }
             else {                                  /* Update With New Qty */
-                updateLineItemInCart(cart.id, (item.quantity + lineItem.quantity), lineItem.id)
+                updateLineItemInCart(cart.id, item.quantity, lineItem.id)
             }
         }
-        window.location.reload()
     }
 
     render () {
         const { products } = this.props  
-        const { handleAddToCart, handleChange } = this
+        const { handleAddToCart } = this
 
         return (
             <Fragment>
-                <h1>Products</h1>
-                <ul>
+                <Grid container style={{flexGrow:1}} spacing={16} >
                 {
-                    products.map(product => <li key={ product.id }>
-                        <label>{ product.name }</label>
-                        <input type="number" name="quantity" min="1" 
-                            onChange={(event) => handleChange(event, product.id)}></input>
-                        <button onClick={() => handleAddToCart(product.id)}>Add to Cart</button>
-                    </li> )
+                    products.map(product => <Grid item xs={12} key={product.id}>
+                        <Card style={{padding: "40px", margin: "20px", display: "flex"}}>
+                            <CardContent>
+                                <Typography variant="subheading">{product.name}</Typography>
+                            </CardContent>
+                            <CardActions>
+                                <ItemQuantity addToCart={handleAddToCart} productId={product.id} />
+                            </CardActions>   
+                        </Card>               
+                    </Grid>
+                    )
                 }
-                </ul>
+                </Grid>
             </Fragment>
         )
     }
